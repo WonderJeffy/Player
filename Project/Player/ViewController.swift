@@ -26,10 +26,12 @@
 
 import UIKit
 
-let videoUrl = URL(string: "https://v.cdn.vine.co/r/videos/AA3C120C521177175800441692160_38f2cbd1ffb.1.5.13763579289575020226.mp4")!
+let badVideoUrl = URL(string: "https://samplelib.com/lib/preview/mp4/sample-20s.mp4")!
+let videoUrl = URL(
+    string: "https://embed-ssl.wistia.com/deliveries/cc8402e8c16cc8f36d3f63bd29eb82f99f4b5f88/accudvh5jy.mp4r")!
 
 class ViewController: UIViewController {
-
+    
     fileprivate var player = Player()
     
     // MARK: object lifecycle
@@ -38,14 +40,14 @@ class ViewController: UIViewController {
         self.player.view.removeFromSuperview()
         self.player.removeFromParent()
     }
-
+    
     // MARK: view lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
+        
         self.player.playerDelegate = self
         self.player.playbackDelegate = self
         
@@ -55,17 +57,18 @@ class ViewController: UIViewController {
         self.view.addSubview(self.player.view)
         self.player.didMove(toParent: self)
         
-//        let localUrl = Bundle.main.url(forResource: "IMG_3267", withExtension: "MOV")
-//        self.player.url = localUrl
+        //        let localUrl = Bundle.main.url(forResource: "Sample 20s", withExtension: "mp4")!
+        //        self.player.url = localUrl
         self.player.url = videoUrl
         
         self.player.playbackLoops = true
         
-        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureRecognizer(_:)))
+        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self, action: #selector(handleTapGestureRecognizer(_:)))
         tapGestureRecognizer.numberOfTapsRequired = 1
         self.player.view.addGestureRecognizer(tapGestureRecognizer)
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -109,13 +112,15 @@ extension ViewController: PlayerDelegate {
     }
     
     func playerBufferingStateDidChange(_ player: Player) {
+        print("\(#function) \(player.bufferingState.description)")
     }
     
     func playerBufferTimeDidChange(_ bufferTime: Double) {
+        print("\(#function) bufferTime: \(bufferTime)")
     }
     
     func player(_ player: Player, didFailWithError error: Error?) {
-        print("\(#function) error.description")
+        print("\(#function) \(error?.localizedDescription ?? "Unknown error")")
     }
     
 }
@@ -125,18 +130,23 @@ extension ViewController: PlayerDelegate {
 extension ViewController: PlayerPlaybackDelegate {
     
     func playerCurrentTimeDidChange(_ player: Player) {
+        print("\(#function) currentTime: \(player.currentTime)")
     }
     
     func playerPlaybackWillStartFromBeginning(_ player: Player) {
+        print("\(#function) playback will start from beginning")
     }
     
     func playerPlaybackDidEnd(_ player: Player) {
+        print("\(#function) playback did end")
+        
     }
     
     func playerPlaybackWillLoop(_ player: Player) {
+        print("\(#function) playback will loop")
     }
-
+    
     func playerPlaybackDidLoop(_ player: Player) {
+        print("\(#function) playback did loop")
     }
 }
-
