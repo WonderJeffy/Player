@@ -1,5 +1,7 @@
 ![Player](https://github.com/piemonte/Player/raw/master/Player.gif)
 
+> **Note**: This branch has been updated for compatibility with **iOS 16+** and **Swift 6**.
+
 ## Player
 
 `Player` is a simple iOS video player library written in [Swift](https://developer.apple.com/swift/).
